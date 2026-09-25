@@ -344,6 +344,315 @@
   .value-card h3{font-size:16px;font-family:'Manrope';font-weight:800;}
   .value-card p{font-size:13.8px;color:var(--ink-soft);margin-top:6px;}
 
+  /* ---------- Blog / Advice & Insights ---------- */
+  .blog-filters{margin-top:28px;display:flex;flex-direction:column;gap:16px;}
+  .blog-search{
+    position:relative;max-width:480px;
+  }
+  .blog-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--ink-faint);pointer-events:none;}
+  .blog-search input{
+    width:100%;padding:13px 16px 13px 44px;border-radius:99px;border:1px solid var(--line);
+    background:var(--surface);color:var(--ink);font-size:14px;font-family:inherit;
+  }
+  .blog-search input:focus{outline:none;border-color:var(--coral);}
+  .blog-pills{display:flex;flex-wrap:wrap;gap:8px;}
+  .blog-pill{
+    border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
+    font-size:13px;font-weight:700;padding:8px 16px;border-radius:99px;cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .blog-pill:hover{border-color:var(--coral);color:var(--coral-deep);}
+  .blog-pill.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+  :root[data-theme="dark"] .blog-pill.active{background:var(--coral);border-color:var(--coral);color:#fff;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .blog-pill.active{background:var(--coral);border-color:var(--coral);color:#fff;}}
+  .blog-empty{margin-top:28px;font-size:14px;color:var(--ink-faint);text-align:center;}
+  .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:28px;}
+  @media (max-width:900px){ .blog-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .blog-grid{grid-template-columns:1fr;} }
+  .blog-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+    overflow:hidden;display:flex;flex-direction:column;transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .blog-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);}
+  .blog-hero{
+    height:120px;display:flex;align-items:center;justify-content:center;flex:none;
+    background:linear-gradient(135deg, color-mix(in srgb, var(--coral) 18%, var(--mist-2)), color-mix(in srgb, var(--coral-deep) 22%, var(--mist-2)));
+  }
+  .blog-hero-ic{width:48px;height:48px;border-radius:14px;background:var(--surface);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);}
+  .blog-hero-ic svg{width:24px;height:24px;color:var(--coral-deep);}
+  :root[data-theme="dark"] .blog-hero-ic svg{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .blog-hero-ic svg{color:#FF9A7F;}}
+  .blog-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1;}
+  .blog-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .blog-cat{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--coral-deep);}
+  :root[data-theme="dark"] .blog-cat{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .blog-cat{color:#FF9A7F;}}
+  .blog-read{font-size:11.5px;color:var(--ink-faint);}
+  .blog-body h3{font-size:16.5px;font-weight:800;font-family:'Manrope';line-height:1.3;}
+  .blog-body p{font-size:13.5px;color:var(--ink-soft);margin-top:8px;flex:1;}
+  .blog-readmore{
+    margin-top:14px;align-self:flex-start;background:none;border:none;cursor:pointer;padding:0;
+    font-size:13.5px;font-weight:700;color:var(--coral-deep);transition:transform .2s ease;
+  }
+  :root[data-theme="dark"] .blog-readmore{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .blog-readmore{color:#FF9A7F;}}
+  .blog-readmore:hover{transform:translateX(3px);}
+
+  /* Article modal */
+  .blog-modal-backdrop{
+    position:fixed;inset:0;z-index:200;background:rgba(10,14,30,0.55);backdrop-filter:blur(3px);
+    display:flex;align-items:center;justify-content:center;padding:20px;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .blog-modal-backdrop.open{opacity:1;pointer-events:auto;}
+  .blog-modal{
+    background:var(--surface);border-radius:var(--radius-lg);max-width:680px;width:100%;
+    max-height:85vh;overflow-y:auto;position:relative;padding:40px 36px 36px;box-shadow:0 30px 80px -20px rgba(0,0,0,0.4);
+    transform:translateY(16px) scale(.98);transition:transform .25s ease;
+  }
+  .blog-modal-backdrop.open .blog-modal{transform:translateY(0) scale(1);}
+  .blog-modal-close{
+    position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
+    background:var(--mist);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);
+  }
+  .blog-modal-close svg{width:16px;height:16px;}
+  .blog-modal-close:hover{background:color-mix(in srgb, var(--coral) 12%, var(--mist));border-color:var(--coral);}
+  .blog-modal-content .blog-cat{display:block;margin-bottom:8px;}
+  .blog-modal-content h2{font-size:24px;font-family:'Fraunces',serif;font-weight:700;line-height:1.25;margin-bottom:6px;}
+  .blog-modal-content .blog-read{display:block;margin-bottom:18px;}
+  .blog-modal-content p{font-size:14.5px;line-height:1.7;color:var(--ink-soft);margin-bottom:14px;}
+  .blog-modal-content p:last-child{margin-bottom:0;}
+  @media (max-width:600px){ .blog-modal{padding:30px 20px 26px;} }
+
+  /* ---------- Form modals (Apply / Referral / Franchise) ---------- */
+  .form-modal-backdrop{
+    position:fixed;inset:0;z-index:210;background:rgba(10,14,30,0.6);backdrop-filter:blur(3px);
+    display:flex;align-items:flex-start;justify-content:center;padding:32px 20px;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;overflow-y:auto;
+  }
+  .form-modal-backdrop.open{opacity:1;pointer-events:auto;}
+  .form-modal{
+    background:var(--surface);border-radius:var(--radius-lg);max-width:760px;width:100%;
+    position:relative;box-shadow:0 30px 80px -20px rgba(0,0,0,0.45);
+    transform:translateY(16px) scale(.98);transition:transform .25s ease;margin:auto;
+  }
+  .form-modal-backdrop.open .form-modal{transform:translateY(0) scale(1);}
+  .form-modal-scroll{padding:44px 40px 40px;}
+  .form-modal-close{
+    position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
+    background:var(--mist);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);z-index:2;
+  }
+  .form-modal-close svg{width:16px;height:16px;}
+  .form-modal-close:hover{background:color-mix(in srgb, var(--coral) 12%, var(--mist));border-color:var(--coral);}
+  .form-modal-title{font-size:24px;font-family:'Fraunces',serif;font-weight:700;margin-top:10px;line-height:1.25;}
+  .form-modal-sub{font-size:14px;color:var(--ink-soft);margin-top:8px;margin-bottom:24px;}
+  @media (max-width:600px){ .form-modal-scroll{padding:56px 20px 30px;} }
+
+  /* ---------- Referral info cards (fixed 3-col grid) ---------- */
+  .referral-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:900px){ .referral-cards{grid-template-columns:1fr;} }
+  .referral-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:24px;display:flex;flex-direction:column;height:100%;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .referral-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);background:color-mix(in srgb, var(--surface) 90%, var(--coral) 8%);}
+  .referral-card-ic{width:44px;height:44px;border-radius:12px;background:color-mix(in srgb, var(--coral) 12%, var(--mist-2));display:flex;align-items:center;justify-content:center;flex:none;margin-bottom:14px;}
+  .referral-card-ic svg{width:21px;height:21px;color:var(--coral-deep);}
+  :root[data-theme="dark"] .referral-card-ic svg{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .referral-card-ic svg{color:#FF9A7F;}}
+  .referral-card h3{font-size:15.5px;font-weight:800;font-family:'Manrope';margin-bottom:8px;}
+  .referral-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;flex:1;}
+  .referral-card .btn{margin-top:16px;align-self:flex-start;}
+
+  /* ---------- Download Centre ---------- */
+  .resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;}
+  @media (max-width:900px){ .resource-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .resource-grid{grid-template-columns:1fr;} }
+  .resource-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:22px;display:flex;flex-direction:column;height:100%;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .resource-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .resource-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+  .resource-ic{width:40px;height:40px;border-radius:10px;background:color-mix(in srgb, var(--coral) 12%, var(--mist-2));display:flex;align-items:center;justify-content:center;flex:none;}
+  .resource-ic svg{width:19px;height:19px;color:var(--coral-deep);}
+  :root[data-theme="dark"] .resource-ic svg{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .resource-ic svg{color:#FF9A7F;}}
+  .resource-meta{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);text-align:right;}
+  .resource-card h3{font-size:15.5px;font-weight:800;font-family:'Manrope';margin-bottom:8px;line-height:1.3;}
+  .resource-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;flex:1;}
+  .resource-card .btn{margin-top:16px;align-self:flex-start;}
+
+  /* ---------- Generic CTA card (used on page views) ---------- */
+  .page-cta-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
+    padding:32px;margin-top:32px;box-shadow:var(--shadow);
+  }
+  .page-cta-card h3{font-size:19px;font-weight:800;font-family:'Manrope';margin-bottom:8px;}
+  .page-cta-card p{color:var(--ink-soft);font-size:14.5px;margin-bottom:18px;}
+
+  /* ---------- Careers hero: role-type cards (distinct from .why-card) ---------- */
+  .role-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px;}
+  @media (max-width:900px){ .role-type-grid{grid-template-columns:1fr;} }
+  .role-type-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:24px;position:relative;overflow:hidden;transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .role-type-card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg, var(--coral), var(--coral-deep));
+  }
+  .role-type-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .role-type-ic{
+    width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:color-mix(in srgb, var(--coral) 14%, var(--mist-2));margin-bottom:14px;
+  }
+  .role-type-ic svg{width:22px;height:22px;color:var(--coral-deep);}
+  :root[data-theme="dark"] .role-type-ic svg{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .role-type-ic svg{color:#FF9A7F;}}
+  .role-type-card h3{font-size:16px;font-weight:800;font-family:'Manrope';}
+  .role-type-card p{font-size:13.5px;color:var(--ink-soft);margin-top:8px;line-height:1.5;}
+
+  /* ---------- Page-view breadcrumb ---------- */
+  .page-back{
+    display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--ink-soft);
+    margin-bottom:20px;cursor:pointer;background:none;border:none;padding:0;
+  }
+  .page-back:hover{color:var(--coral-deep);}
+  .page-back svg{width:16px;height:16px;}
+
+  /* ---------- Cookie consent banner ---------- */
+  .cookie-banner{
+    position:fixed;left:0;right:0;bottom:0;z-index:300;
+    background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -12px 40px -12px rgba(0,0,0,0.2);
+    padding:22px 20px calc(22px + env(safe-area-inset-bottom,0px));
+    transform:translateY(110%);transition:transform .35s ease;
+  }
+  .cookie-banner.open{transform:translateY(0);}
+  .cookie-banner-inner{max-width:1080px;margin:0 auto;}
+  .cookie-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px;}
+  .cookie-ic{width:38px;height:38px;border-radius:10px;background:color-mix(in srgb, var(--coral) 12%, var(--mist-2));display:flex;align-items:center;justify-content:center;flex:none;}
+  .cookie-ic svg{width:19px;height:19px;color:var(--coral-deep);}
+  :root[data-theme="dark"] .cookie-ic svg{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cookie-ic svg{color:#FF9A7F;}}
+  .cookie-banner h3{font-size:16px;font-weight:800;font-family:'Manrope';}
+  .cookie-banner p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin-top:4px;max-width:70ch;}
+  .cookie-cats{display:none;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0;}
+  .cookie-banner.customising .cookie-cats{display:grid;}
+  @media (max-width:760px){ .cookie-cats{grid-template-columns:1fr;} }
+  .cookie-cat{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--mist);}
+  .cookie-cat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:10px;}
+  .cookie-cat-head strong{font-size:13.5px;}
+  .cookie-cat p{margin:0;font-size:12.5px;}
+  .cookie-switch{position:relative;display:inline-block;width:38px;height:22px;flex:none;}
+  .cookie-switch input{opacity:0;width:0;height:0;position:absolute;}
+  .cookie-switch .track{position:absolute;inset:0;background:var(--line);border-radius:99px;transition:background .2s ease;cursor:pointer;}
+  .cookie-switch .track::before{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s ease;}
+  .cookie-switch input:checked + .track{background:var(--coral);}
+  .cookie-switch input:checked + .track::before{transform:translateX(16px);}
+  .cookie-switch input:disabled + .track{background:var(--coral);opacity:.6;cursor:not-allowed;}
+  .cookie-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end;margin-top:12px;}
+  .cookie-actions .cookie-customise-link{margin-right:auto;background:none;border:none;padding:0;font-size:13px;font-weight:700;color:var(--ink-soft);text-decoration:underline;cursor:pointer;}
+  .cookie-actions .cookie-customise-link:hover{color:var(--coral-deep);}
+
+
+  /* ---------- Franchise: stats, pillars, journey ---------- */
+  .stat-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;}
+  @media (max-width:800px){ .stat-tiles{grid-template-columns:1fr;} }
+  .stat-tile{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:24px;text-align:center;
+  }
+  .stat-num{display:block;font-family:'Fraunces',serif;font-size:34px;font-weight:700;color:var(--coral-deep);}
+  :root[data-theme="dark"] .stat-num{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stat-num{color:#FF9A7F;}}
+  .stat-label{display:block;font-size:13.5px;font-weight:700;color:var(--ink);margin-top:8px;}
+  .stat-src{display:block;font-size:11px;color:var(--ink-faint);margin-top:8px;}
+
+  .pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px;}
+  @media (max-width:900px){ .pillars-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .pillars-grid{grid-template-columns:1fr;} }
+  .pillar-item{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:18px;transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .pillar-item:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .pillar-no{font-family:'Fraunces',serif;font-size:13px;font-weight:700;color:var(--coral-deep);}
+  :root[data-theme="dark"] .pillar-no{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pillar-no{color:#FF9A7F;}}
+  .pillar-item h4{font-size:14.5px;font-weight:800;font-family:'Manrope';margin-top:6px;}
+  .pillar-item p{font-size:12.8px;color:var(--ink-soft);margin-top:6px;}
+
+  /* ---------- Franchise: illustrative territory explorer ---------- */
+  .territory-explorer{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;margin-top:24px;align-items:stretch;}
+  @media (max-width:860px){ .territory-explorer{grid-template-columns:1fr;} }
+  .territory-map{
+    position:relative;background:var(--mist);border:1px solid var(--line);border-radius:var(--radius-md);
+    min-height:380px;overflow:hidden;
+  }
+  .territory-map-tag{
+    position:absolute;top:12px;left:12px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--ink-faint);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 10px;z-index:2;
+  }
+  .territory-pin{
+    position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;
+    background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:6px 12px 6px 8px;
+    font-size:11.5px;font-weight:700;color:var(--ink);cursor:pointer;white-space:nowrap;
+    box-shadow:var(--shadow);transition:transform .2s ease, border-color .2s ease;
+  }
+  .territory-pin:hover{transform:translate(-50%,-50%) scale(1.06);}
+  .territory-pin.active{border-color:var(--coral-deep);box-shadow:0 0 0 3px color-mix(in srgb, var(--coral) 25%, transparent);}
+  @media (max-width:520px){
+    .territory-map{min-height:300px;}
+    .territory-pin{font-size:9.5px;padding:4px 9px 4px 6px;gap:4px;}
+    .territory-dot{width:7px;height:7px;}
+    .territory-map-tag{font-size:9px;padding:3px 8px;}
+  }
+  .territory-dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--ink-faint);}
+  .territory-pin[data-status="operating"] .territory-dot{background:#2E9E6B;}
+  .territory-pin[data-status="available"] .territory-dot{background:var(--coral-deep);}
+  .territory-pin[data-status="reserved"] .territory-dot{background:#D9A62E;}
+  .territory-pin[data-status="soon"] .territory-dot{background:#8892A6;}
+  .territory-detail{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:24px;display:flex;flex-direction:column;
+  }
+  .territory-status-badge{
+    align-self:flex-start;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+    padding:5px 12px;border-radius:99px;margin-bottom:12px;background:var(--mist);color:var(--ink-soft);
+  }
+  .territory-status-badge[data-status="operating"]{background:color-mix(in srgb, #2E9E6B 16%, var(--mist));color:#1f7a50;}
+  .territory-status-badge[data-status="available"]{background:color-mix(in srgb, var(--coral) 16%, var(--mist));color:var(--coral-deep);}
+  .territory-status-badge[data-status="reserved"]{background:color-mix(in srgb, #D9A62E 20%, var(--mist));color:#8a6a10;}
+  .territory-status-badge[data-status="soon"]{background:var(--mist);color:var(--ink-faint);}
+  .territory-detail h3{font-size:19px;font-weight:800;font-family:'Manrope';margin-bottom:8px;}
+  .territory-detail p{font-size:13.8px;color:var(--ink-soft);line-height:1.6;}
+  .territory-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+  .territory-legend span{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink-faint);font-weight:700;}
+  .territory-legend .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .territory-legend .dot.operating{background:#2E9E6B;}
+  .territory-legend .dot.available{background:var(--coral-deep);}
+  .territory-legend .dot.reserved{background:#D9A62E;}
+  .territory-legend .dot.soon{background:#8892A6;}
+
+  .franchise-steps{list-style:none;counter-reset:fstep;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px;padding:0;}
+  @media (max-width:900px){ .franchise-steps{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .franchise-steps{grid-template-columns:1fr;} }
+  .franchise-steps li{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:18px 18px 18px 54px;position:relative;counter-increment:fstep;
+  }
+  .franchise-steps li::before{
+    content:counter(fstep);position:absolute;left:16px;top:18px;
+    width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg, var(--coral), var(--coral-deep));
+    color:#fff;font-family:'Fraunces',serif;font-weight:700;font-size:13px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .franchise-steps li strong{display:block;font-size:14px;font-weight:800;font-family:'Manrope';}
+  .franchise-steps li span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:4px;}
+
   /* ---------- Why Us ---------- */
   .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   @media (max-width:940px){ .why-grid{grid-template-columns:1fr 1fr;} }
@@ -377,6 +686,49 @@
   }
   .careers-cta-row{margin-top:28px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
   .careers-note{font-size:13px;color:var(--ink-faint);margin-top:10px;}
+  .role-row{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--surface);
+    margin-bottom:10px;flex-wrap:wrap;transition:border-color .25s ease, background .25s ease;
+  }
+  .role-row:hover{border-color:color-mix(in srgb, var(--coral) 40%, var(--line));background:color-mix(in srgb, var(--surface) 92%, var(--coral) 6%);}
+  .role-row strong{display:block;font-size:15px;color:var(--ink);}
+  .role-row span{display:block;font-size:13px;color:var(--ink-soft);margin-top:3px;}
+
+  .course-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @media (max-width:900px){ .course-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .course-grid{grid-template-columns:1fr;} }
+  .course-item{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:16px;transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .course-item:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .course-tag{
+    display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--coral-deep);background:color-mix(in srgb, var(--coral) 12%, var(--mist-2));
+    padding:3px 9px;border-radius:99px;margin-bottom:10px;
+  }
+  :root[data-theme="dark"] .course-tag{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .course-tag{color:#FF9A7F;}}
+  .course-item h4{font-size:14.5px;font-weight:800;font-family:'Manrope';}
+  .course-item p{font-size:12.5px;color:var(--ink-soft);margin-top:6px;line-height:1.5;}
+  .recruit-steps{
+    list-style:none;margin:0;padding:0;counter-reset:rstep;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  @media (max-width:820px){ .recruit-steps{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .recruit-steps{grid-template-columns:1fr;} }
+  .recruit-steps li{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+    counter-increment:rstep;position:relative;padding-left:44px;
+  }
+  .recruit-steps li::before{
+    content:counter(rstep);position:absolute;left:14px;top:16px;
+    width:22px;height:22px;border-radius:50%;background:color-mix(in srgb, var(--coral) 16%, transparent);
+    color:var(--coral-deep);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;
+  }
+  .recruit-steps strong{display:block;font-size:13.8px;color:var(--ink);}
+  .recruit-steps span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:4px;}
 
   /* ---------- Services ---------- */
   .services{background:var(--mist);}
@@ -621,13 +973,29 @@
 
   /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--line);padding-block:56px 40px;}
-  .foot-grid{display:grid;grid-template-columns:1.3fr 0.8fr 1fr;gap:40px;}
-  @media (max-width:760px){ .foot-grid{grid-template-columns:1fr;gap:32px;} }
+  .foot-grid{display:grid;grid-template-columns:1.5fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr;gap:28px;}
+  @media (max-width:1100px){ .foot-grid{grid-template-columns:1fr 1fr 1fr;} .foot-brand{grid-column:1 / -1;margin-bottom:8px;} }
+  @media (max-width:640px){ .foot-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:460px){ .foot-grid{grid-template-columns:1fr;gap:32px;} .foot-brand{grid-column:auto;} }
   .foot-brand img{height:32px;}
-  .foot-tag{margin-top:14px;font-size:14px;color:var(--ink-soft);max-width:34ch;}
+  .foot-tag{margin-top:14px;font-size:14px;color:var(--ink-soft);max-width:38ch;}
+  .foot-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
   .foot-col h4{font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
   .foot-col a, .foot-col p{display:block;font-size:14px;color:var(--ink-soft);margin-bottom:10px;}
   .foot-col a:hover{color:var(--indigo);}
+  .foot-contact{
+    margin-top:36px;padding-top:28px;border-top:1px solid var(--line);
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  @media (max-width:800px){ .foot-contact{grid-template-columns:1fr;} }
+  .foot-contact > div{display:flex;align-items:flex-start;gap:12px;}
+  .foot-contact svg{width:20px;height:20px;color:var(--coral-deep);flex:none;margin-top:2px;}
+  :root[data-theme="dark"] .foot-contact svg{color:#FF9A7F;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .foot-contact svg{color:#FF9A7F;}}
+  .foot-contact a{display:block;font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .foot-contact a:hover{color:var(--coral-deep);}
+  .foot-contact span{display:block;font-size:12.5px;color:var(--ink-faint);line-height:1.4;}
+  .foot-addr-title{font-size:14.5px !important;font-weight:700;color:var(--ink) !important;margin-bottom:2px;}
   .foot-trust{
     margin-top:36px;padding-top:28px;border-top:1px solid var(--line);
     display:flex;flex-wrap:wrap;gap:22px;align-items:center;
@@ -652,6 +1020,38 @@
   }
   .float-wa:hover{transform:scale(1.08);}
   .float-wa svg{width:26px;height:26px;}
+
+  /* ---------- Floating multi-option contact menu ---------- */
+  .float-menu{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
+  .float-toggle{
+    width:56px;height:56px;border-radius:50%;border:none;cursor:pointer;
+    background:linear-gradient(135deg, var(--coral), var(--coral-deep));color:#fff;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px -8px rgba(232,90,60,0.6);
+    transition:transform .25s ease;position:relative;flex:none;
+  }
+  .float-toggle:hover{transform:scale(1.08);}
+  .float-toggle svg{width:24px;height:24px;position:absolute;transition:opacity .2s ease, transform .2s ease;}
+  .float-toggle .float-ic-close{opacity:0;transform:rotate(-45deg) scale(.6);}
+  .float-toggle .float-ic-open{opacity:1;transform:rotate(0) scale(1);}
+  .float-menu.open .float-toggle .float-ic-close{opacity:1;transform:rotate(0) scale(1);}
+  .float-menu.open .float-toggle .float-ic-open{opacity:0;transform:rotate(45deg) scale(.6);}
+  .float-options{
+    display:flex;flex-direction:column;gap:10px;align-items:flex-end;
+    opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .2s ease, transform .2s ease;
+  }
+  .float-menu.open .float-options{opacity:1;pointer-events:auto;transform:translateY(0);}
+  .float-opt{
+    display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);
+    border-radius:99px;padding:8px 16px 8px 8px;box-shadow:var(--shadow);font-size:13.5px;font-weight:700;color:var(--ink);
+    transition:transform .2s ease, border-color .2s ease;white-space:nowrap;
+  }
+  .float-opt:hover{transform:translateX(-3px);border-color:var(--coral);}
+  .float-opt-ic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;color:#fff;}
+  .float-opt-ic svg{width:17px;height:17px;}
+  .float-opt-ic.wa{background:#25D366;}
+  .float-opt-ic.call{background:linear-gradient(135deg, var(--coral), var(--coral-deep));}
+  .float-opt-ic.assess{background:var(--indigo);}
+  @media (max-width:480px){ .float-opt-label{display:none;} .float-opt{padding:8px;} }
 
   /* ---------- Accessibility toolbar ---------- */
   html{ zoom:1; }
@@ -785,7 +1185,6 @@
     </a>
     <nav>
       <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#why-us">Why Us</a></li>
         <li class="has-dropdown" id="servicesNavItem">
@@ -803,8 +1202,8 @@
             <a href="#services" class="view-all">View All Services &rarr;</a>
           </div>
         </li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#careers">Careers</a></li>
+        <li><a href="#referral">Referrals</a></li>
       </ul>
     </nav>
     <div class="nav-cta">
@@ -820,12 +1219,11 @@
 </header>
 
 <div class="mobile-panel" id="mobilePanel">
-  <a href="#home">Home</a>
   <a href="#about">About</a>
   <a href="#why-us">Why Us</a>
   <a href="#services">Services</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
+  <a href="#careers">Careers</a>
+  <a href="#referral">Referrals</a>
   <a href="#contact" class="btn btn-primary" data-purpose="care">Arrange Care</a>
   <a href="#careers" class="btn btn-ghost" data-purpose="team">Join Our Team</a>
   <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
@@ -1058,28 +1456,101 @@
 <!-- ================= CAREERS ================= -->
 <section id="careers">
   <div class="wrap">
+    <button type="button" class="page-back" data-go-home="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to home</button>
     <div class="section-head reveal-init">
       <span class="eyebrow">Careers</span>
       <h2>Join Our Team</h2>
       <p>We're hiring caring, reliable people across North London &mdash; full training given, no care experience required to start.</p>
     </div>
 
-    <div class="why-grid">
-      <div class="why-card reveal-init">
-        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+    <div class="role-type-grid reveal-init">
+      <div class="role-type-card">
+        <div class="role-type-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
         <h3>Care Assistant / Support Worker</h3>
         <p>Help with personal care, meals, medication prompts, light housework and companionship on visits close to home.</p>
       </div>
-      <div class="why-card reveal-init">
-        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></div>
+      <div class="role-type-card">
+        <div class="role-type-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></div>
         <h3>Live-in Carer</h3>
         <p>Round-the-clock, one-to-one support living in a client's home &mdash; a demanding but deeply rewarding role.</p>
       </div>
-      <div class="why-card reveal-init">
-        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></div>
+      <div class="role-type-card">
+        <div class="role-type-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></div>
         <h3>Complex Care Nurse / Support Worker</h3>
         <p>Specialist support for clients with clinical needs &mdash; PEG feeding, stoma and oxygen therapy, fully trained.</p>
       </div>
+    </div>
+
+    <div class="who-grid reveal-init" style="margin-bottom:36px;">
+      <div class="who-chip"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span>Fair, competitive pay &mdash; reviewed regularly</span></div>
+      <div class="who-chip"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><span>Flexible shifts built around your life</span></div>
+      <div class="who-chip"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/></svg></div><span>Funded qualifications through First Care College</span></div>
+      <div class="who-chip"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-4.7 7.6 8.5 8.5 0 0 1-8.6-.6L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.5h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><span>Office &amp; on-call support, not left on your own</span></div>
+    </div>
+
+    <div class="courses-block reveal-init" style="margin-bottom:36px;">
+      <h3 style="font-size:18px;font-weight:800;font-family:'Manrope';margin-bottom:6px;">Training &amp; courses our carers complete</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:18px;max-width:70ch;">
+        All training is delivered through our partner, <a href="https://firstcarecollege.com" target="_blank" rel="noopener" style="color:var(--coral-deep);font-weight:700;">First Care College</a>, accredited by NCFE CACHE. Course access depends on role and experience &mdash; ask us which path applies to you.
+      </p>
+      <div class="course-grid">
+        <div class="course-item">
+          <span class="course-tag">Before your first visit</span>
+          <h4>Mandatory Compliance Training</h4>
+          <p>Face-to-face, CQC-aligned: First Aid, Manual Handling, Medication Administration, and Safeguarding.</p>
+        </div>
+        <div class="course-item">
+          <span class="course-tag">Ongoing</span>
+          <h4>CPD &amp; Specialist Courses</h4>
+          <p>Online, flexible modules covering dementia care, end-of-life care and other specialist topics, with certification included.</p>
+        </div>
+        <div class="course-item">
+          <span class="course-tag">Career development</span>
+          <h4>Regulated Diplomas, Levels 2&ndash;5</h4>
+          <p>NCFE CACHE-accredited Adult Care diplomas, from Level 2 Diploma in Care through to Level 5 Leadership for Health &amp; Social Care.</p>
+        </div>
+        <div class="course-item">
+          <span class="course-tag">Government-funded</span>
+          <h4>Apprenticeships</h4>
+          <p>Work-based apprenticeships from Level 2 Adult Care Worker up to Level 5 Leadership &amp; Management &mdash; earn while you qualify.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="roles-list reveal-init" style="margin-bottom:36px;">
+      <h3 style="font-size:18px;font-weight:800;font-family:'Manrope';margin-bottom:16px;">Current open roles</h3>
+      <div class="role-row">
+        <div><strong>Care Assistant</strong><span>Full-time or part-time &middot; North London community visits</span></div>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="apply" data-preset-role="Care Assistant">Apply &rarr;</button>
+      </div>
+      <div class="role-row">
+        <div><strong>Senior Care Professional</strong><span>Full-time &middot; leads complex visits, mentors new starters</span></div>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="apply" data-preset-role="Senior Care Professional">Apply &rarr;</button>
+      </div>
+      <div class="role-row">
+        <div><strong>Live-in Care Professional</strong><span>Live-in placements &middot; round-the-clock one-to-one support</span></div>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="apply" data-preset-role="Live-in Care Professional">Apply &rarr;</button>
+      </div>
+      <div class="role-row">
+        <div><strong>Care Coordinator</strong><span>Office-based &middot; schedules visits, liaises with clients and carers</span></div>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="apply" data-preset-role="Care Coordinator">Apply &rarr;</button>
+      </div>
+      <div class="role-row">
+        <div><strong>Office &amp; Support Roles</strong><span>Full-time or part-time &middot; compliance, recruiting, admin</span></div>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="apply" data-preset-role="Office &amp; Support Roles">Apply &rarr;</button>
+      </div>
+    </div>
+
+    <div class="recruit-journey reveal-init" style="margin-bottom:36px;">
+      <h3 style="font-size:18px;font-weight:800;font-family:'Manrope';margin-bottom:16px;">Our recruitment journey</h3>
+      <ol class="recruit-steps">
+        <li><strong>Apply online</strong><span>2 minutes, no CV required to start</span></li>
+        <li><strong>Initial phone call</strong><span>A short chat about the role and your availability</span></li>
+        <li><strong>Values-based interview</strong><span>In person or video &mdash; we ask about how you care for people</span></li>
+        <li><strong>Enhanced DBS &amp; reference checks</strong><span>We arrange and cover the cost</span></li>
+        <li><strong>Paid induction &amp; shadowing</strong><span>Care Certificate training before you work solo</span></li>
+        <li><strong>Welcome to Real Homecare</strong><span>Ongoing supervision, refresher training and support</span></li>
+      </ol>
     </div>
 
     <ul class="careers-reqs reveal-init">
@@ -1092,23 +1563,24 @@
     </ul>
 
     <div class="careers-cta-row reveal-init">
-      <a href="#apply" class="btn btn-primary">Apply Now &rarr;</a>
+      <button type="button" class="btn btn-primary" data-open-modal="apply">Apply Now &rarr;</button>
       <a href="tel:+442037691947" class="btn btn-ghost">Call to ask about roles</a>
     </div>
-    <p class="careers-note">Ready to apply? Fill in the application form below &mdash; it takes about 5 minutes.</p>
+    <p class="careers-note">Ready to apply? Click any &ldquo;Apply&rdquo; button above &mdash; the form takes about 5 minutes.</p>
   </div>
 </section>
 
-<!-- ================= APPLY ================= -->
-<section id="apply" style="background:var(--mist-2);">
-  <div class="wrap">
-    <div class="section-head reveal-init">
+<!-- ================= APPLY (modal) ================= -->
+<div class="form-modal-backdrop" id="applyModalBackdrop">
+  <div class="form-modal" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+    <button type="button" class="form-modal-close" data-close-modal="apply" aria-label="Close application form">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="form-modal-scroll">
       <span class="eyebrow">Application Form</span>
-      <h2>Apply to Join Real Homecare</h2>
-      <p>Tell us about yourself below. It takes about 5 minutes &mdash; we respond to every application.</p>
-    </div>
+      <h2 id="applyModalTitle" class="form-modal-title">Apply to Join Real Homecare</h2>
+      <p class="form-modal-sub">Tell us about yourself below. It takes about 5 minutes &mdash; we respond to every application.</p>
 
-    <div class="form-card reveal-init" style="max-width:760px;">
       <div class="apply-cv-box">
         <strong>Before you submit:</strong> this form can't attach files directly. Please also email your CV to
         <a href="mailto:info@realhomecare.net" style="color:var(--indigo);font-weight:700;">info@realhomecare.net</a>
@@ -1122,9 +1594,11 @@
           <label for="applyPosition">Position applying for</label>
           <select id="applyPosition" name="Position" required>
             <option value="">Select a role&hellip;</option>
-            <option>Care Assistant / Support Worker</option>
-            <option>Live-in Carer</option>
-            <option>Complex Care Support Worker</option>
+            <option>Care Assistant</option>
+            <option>Senior Care Professional</option>
+            <option>Live-in Care Professional</option>
+            <option>Care Coordinator</option>
+            <option>Office &amp; Support Roles</option>
             <option>Other / not sure yet</option>
           </select>
         </div>
@@ -1226,7 +1700,130 @@
       </form>
     </div>
   </div>
+</div>
+
+<!-- ================= PROFESSIONAL REFERRALS ================= -->
+<section id="referral" style="background:var(--mist-2);">
+  <div class="wrap">
+    <button type="button" class="page-back" data-go-home="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to home</button>
+    <div class="section-head reveal-init">
+      <span class="eyebrow">For Health &amp; Social Care Professionals</span>
+      <h2>Refer a Patient or Client</h2>
+      <p>Discharge planners, social workers, GPs and case managers can refer directly to our care team &mdash; we respond to every referral the same working day.</p>
+    </div>
+
+    <div class="referral-cards reveal-init">
+      <div class="referral-card">
+        <div class="referral-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <h3>Dedicated Professional Care Line</h3>
+        <p>For urgent or same-day referral enquiries, call our office directly.</p>
+        <a href="tel:+442037691947" class="btn btn-ghost btn-sm">Call 020 3769 1947</a>
+      </div>
+      <div class="referral-card">
+        <div class="referral-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+        <h3>Email Referral</h3>
+        <p>Prefer to send the referral form by email? Use the address below.</p>
+        <a href="mailto:info@realhomecare.net?subject=Professional%20Referral" class="btn btn-ghost btn-sm">info@realhomecare.net</a>
+      </div>
+      <div class="referral-card">
+        <div class="referral-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M2 12h20"/></svg></div>
+        <h3>What We Accept</h3>
+        <p>Hospital discharge, reablement step-down, palliative &amp; end-of-life, complex care and social-services referrals across our coverage area.</p>
+      </div>
+    </div>
+
+    <div class="page-cta-card reveal-init">
+      <h3>Ready to refer a patient or client?</h3>
+      <p>Fill in a short online referral form &mdash; it takes about 5 minutes and goes straight to our care team.</p>
+      <button type="button" class="btn btn-primary" data-open-modal="referral">Start a Referral &rarr;</button>
+    </div>
+  </div>
 </section>
+
+<!-- ================= REFERRAL (modal) ================= -->
+<div class="form-modal-backdrop" id="referralModalBackdrop">
+  <div class="form-modal" role="dialog" aria-modal="true" aria-labelledby="referralModalTitle">
+    <button type="button" class="form-modal-close" data-close-modal="referral" aria-label="Close referral form">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="form-modal-scroll">
+      <span class="eyebrow">Professional Referral</span>
+      <h2 id="referralModalTitle" class="form-modal-title">Refer a Patient or Client</h2>
+      <p class="form-modal-sub">All fields help us prepare before the first visit &mdash; for same-day placements, please also call the Professional Care Line.</p>
+      <form id="referralForm" action="mailto:info@realhomecare.net?subject=Professional%20Referral" method="post" enctype="text/plain">
+        <div class="field">
+          <label for="refName">Referrer name</label>
+          <input id="refName" name="ReferrerName" type="text" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label for="refOrg">Organisation / NHS Trust / Local Authority</label>
+          <input id="refOrg" name="Organisation" type="text" placeholder="e.g. North Central London ICB" required>
+        </div>
+        <div class="field">
+          <label for="refRole">Professional role</label>
+          <select id="refRole" name="Role" required>
+            <option value="">Select&hellip;</option>
+            <option>Discharge Planner / Hospital Social Worker</option>
+            <option>Community Social Worker</option>
+            <option>GP / Practice Nurse</option>
+            <option>Case Manager / Care Coordinator</option>
+            <option>Occupational Therapist</option>
+            <option>Other Healthcare Professional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="refEmail">Work email</label>
+          <input id="refEmail" name="Email" type="email" placeholder="you@nhs.net" required>
+        </div>
+        <div class="field">
+          <label for="refPhone">Direct telephone</label>
+          <input id="refPhone" name="Phone" type="tel" placeholder="Your direct line" required>
+        </div>
+        <div class="field">
+          <label for="refClient">Patient / client initials or name</label>
+          <input id="refClient" name="ClientName" type="text" placeholder="Initials are fine if preferred" required>
+        </div>
+        <div class="field">
+          <label for="refPostcode">Discharge / home postcode</label>
+          <input id="refPostcode" name="Postcode" type="text" placeholder="e.g. N15" required>
+        </div>
+        <div class="field">
+          <label for="refService">Care service required</label>
+          <select id="refService" name="ServiceRequired" required>
+            <option value="">Select&hellip;</option>
+            <option>Hospital discharge / step-down support</option>
+            <option>Reablement</option>
+            <option>Respite care</option>
+            <option>Complex care</option>
+            <option>Live-in care</option>
+            <option>Palliative &amp; end-of-life care</option>
+            <option>Personal assistance / domiciliary care</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="refUrgency">Urgency / proposed start date</label>
+          <select id="refUrgency" name="Urgency" required>
+            <option value="">Select&hellip;</option>
+            <option>Same day / urgent</option>
+            <option>Within 48 hours</option>
+            <option>Within a week</option>
+            <option>Planned &mdash; date to be confirmed</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="refNotes">Care overview, mobility &amp; risk considerations</label>
+          <textarea id="refNotes" name="CareOverview" placeholder="Diagnosis summary, mobility level, moving &amp; handling needs, risks the care team should know before the first visit" required></textarea>
+        </div>
+        <div class="field-check">
+          <input type="checkbox" id="refConsent" required>
+          <label for="refConsent">I confirm this referral is made with appropriate consent and authority, and understand Real Homecare will hold this information to arrange and provide care, as set out in the <a href="#legal">Privacy Policy</a>.</label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:22px;">Submit Referral</button>
+        <p class="form-note">Submitting opens your email app with the referral details filled in, addressed to info@realhomecare.net &mdash; check it and hit send. For same-day placements, please also call the Professional Care Line above.</p>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- ================= NEWS ================= -->
 <section id="news">
@@ -1241,6 +1838,510 @@
     </div>
   </div>
 </section>
+
+<!-- ================= ADVICE & INSIGHTS (BLOG) ================= -->
+<section id="blog" style="background:var(--mist-2);">
+  <div class="wrap">
+    <div class="section-head reveal-init">
+      <span class="eyebrow">Advice &amp; Insights</span>
+      <h2>Guidance From Our Care Team</h2>
+      <p>Practical, plain-language articles for families thinking about home care &mdash; written by our team, no jargon.</p>
+    </div>
+
+    <div class="blog-filters reveal-init">
+      <div class="blog-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" id="blogSearch" placeholder="Search articles by keyword&hellip;" aria-label="Search articles">
+      </div>
+      <div class="blog-pills" id="blogPills">
+        <button type="button" class="blog-pill active" data-cat-filter="all">All</button>
+        <button type="button" class="blog-pill" data-cat-filter="getting-started">Getting Started</button>
+        <button type="button" class="blog-pill" data-cat-filter="care-options">Care Options</button>
+        <button type="button" class="blog-pill" data-cat-filter="recovery">Recovery</button>
+        <button type="button" class="blog-pill" data-cat-filter="specialist-care">Specialist Care</button>
+        <button type="button" class="blog-pill" data-cat-filter="funding">Funding</button>
+      </div>
+    </div>
+
+    <p class="blog-empty" id="blogEmpty" style="display:none;">No articles match your search &mdash; try a different keyword or category.</p>
+
+    <div class="blog-grid" id="blogGrid">
+      <article class="blog-card reveal-init" data-cat="getting-started">
+        <div class="blog-hero"><div class="blog-hero-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4.4-3.4-8-6.6-8-10.6C4 7 6.5 5 9.2 5c1.6 0 3.1.8 4 2.1C14.1 5.8 15.6 5 17.2 5 19.9 5 22 7 22 10.4c0 4-3.6 7.2-8 10.6z"/></svg></div></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-cat">Getting Started</span><span class="blog-read">4 min read</span></div>
+          <h3>5 Signs It Might Be Time to Consider Home Care</h3>
+          <p>Missed medications, a fall, or a fridge that's suddenly empty &mdash; the signals are often small before they're serious. Here's what families tend to notice first.</p>
+          <button type="button" class="blog-readmore" data-article="signs-time-for-care">Read article &rarr;</button>
+        </div>
+      </article>
+      <article class="blog-card reveal-init" data-cat="care-options">
+        <div class="blog-hero"><div class="blog-hero-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0 7-7 7 7M5 10v10a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1V10"/></svg></div></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-cat">Care Options</span><span class="blog-read">5 min read</span></div>
+          <h3>Live-in Care vs. a Care Home: What's Right for Your Family?</h3>
+          <p>Both can deliver excellent care. The right answer usually comes down to three things: the person's needs, their home, and what &ldquo;staying independent&rdquo; actually means to them.</p>
+          <button type="button" class="blog-readmore" data-article="livein-vs-care-home">Read article &rarr;</button>
+        </div>
+      </article>
+      <article class="blog-card reveal-init" data-cat="recovery">
+        <div class="blog-hero"><div class="blog-hero-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11M9 11l3 3L22 4"/></svg></div></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-cat">Recovery</span><span class="blog-read">4 min read</span></div>
+          <h3>Reablement Explained: Regaining Independence After a Hospital Stay</h3>
+          <p>Reablement isn't the same as ongoing home care &mdash; it's short, focused support designed to help you do more for yourself, not less.</p>
+          <button type="button" class="blog-readmore" data-article="reablement-explained">Read article &rarr;</button>
+        </div>
+      </article>
+      <article class="blog-card reveal-init" data-cat="getting-started">
+        <div class="blog-hero"><div class="blog-hero-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-cat">Getting Started</span><span class="blog-read">5 min read</span></div>
+          <h3>A Family's Checklist for Choosing a Home Care Provider</h3>
+          <p>Beyond the glossy brochure: the practical questions that actually tell you whether a care provider is a good fit.</p>
+          <button type="button" class="blog-readmore" data-article="choosing-a-provider">Read article &rarr;</button>
+        </div>
+      </article>
+      <article class="blog-card reveal-init" data-cat="specialist-care">
+        <div class="blog-hero"><div class="blog-hero-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 5v5l3 3"/></svg></div></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-cat">Specialist Care</span><span class="blog-read">5 min read</span></div>
+          <h3>Supporting a Loved One with Dementia at Home: Practical Tips</h3>
+          <p>Small, consistent changes to routine and environment often do more for someone living with dementia than any single big decision.</p>
+          <button type="button" class="blog-readmore" data-article="dementia-care-at-home">Read article &rarr;</button>
+        </div>
+      </article>
+      <article class="blog-card reveal-init" data-cat="funding">
+        <div class="blog-hero"><div class="blog-hero-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-cat">Funding</span><span class="blog-read">6 min read</span></div>
+          <h3>NHS and Local Authority Funding for Home Care: What You Need to Know</h3>
+          <p>Funding for home care in the UK is genuinely confusing. Here's a plain-language starting point before you speak to anyone.</p>
+          <button type="button" class="blog-readmore" data-article="funding-home-care">Read article &rarr;</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Article source content, rendered into the modal by JS -->
+<div id="blogArticleSources" hidden>
+  <div class="blog-article-src" id="src-signs-time-for-care" hidden>
+    <span class="blog-cat">Getting Started</span>
+    <h2>5 Signs It Might Be Time to Consider Home Care</h2>
+    <span class="blog-read">4 min read</span>
+    <p>It rarely happens all at once. Families usually notice a string of small things first &mdash; a missed hospital appointment, a stack of unopened post, a fridge that doesn't look right for the time of month. On their own, none of these prove anything. Together, they're often the first real signal that daily life has become harder to manage alone.</p>
+<p><strong>1. Medication is being missed or doubled up.</strong> Look for unused pill organisers, conflicting stories about what's been taken, or repeat prescriptions running out early or late.</p>
+<p><strong>2. The home itself is slipping.</strong> Unopened mail, out-of-date food, laundry piling up, or a noticeably less tidy house than usual can point to fatigue, pain, or difficulty with everyday tasks rather than simple untidiness.</p>
+<p><strong>3. A fall, or a near miss.</strong> Even a minor stumble is worth taking seriously &mdash; it's one of the most reliable predictors that a second, more serious fall may follow without some support in place.</p>
+<p><strong>4. Withdrawal from people and routines.</strong> Skipping a weekly club, turning down visits, or going quiet on the phone can be as much about fatigue or low confidence as it is about mood.</p>
+<p><strong>5. A family member says "I'm managing fine" a little too often.</strong> Reassurance repeated without being asked is sometimes the clearest sign that things are, in fact, not entirely fine.</p>
+<p>None of this means a big decision has to be made overnight. A short conversation with a home care provider costs nothing and usually helps families work out whether a few hours of support a week would make the real difference &mdash; long before a crisis forces the issue.</p>
+  </div>
+  <div class="blog-article-src" id="src-livein-vs-care-home" hidden>
+    <span class="blog-cat">Care Options</span>
+    <h2>Live-in Care vs. a Care Home: What's Right for Your Family?</h2>
+    <span class="blog-read">5 min read</span>
+    <p>This is usually the hardest decision a family makes, and there's no single right answer &mdash; only the right answer for a specific person, in a specific home, with specific needs.</p>
+<p><strong>Live-in care</strong> means a dedicated carer moves into the person's own home, providing one-to-one support around the clock. It keeps someone in familiar surroundings, with their own routines, pets and neighbours, and tends to suit people who are fairly settled at home but need consistent help with daily living, mobility or company.</p>
+<p><strong>A care home</strong> provides support from a rotating team, on-site 24/7, usually with nursing cover and communal facilities. It can suit people with more complex or unpredictable medical needs, or those who would benefit from the social structure of living alongside others.</p>
+<p><strong>Questions worth asking as a family:</strong></p>
+<p>How attached is your relative to their home and area? Would moving cause more distress than it solves? Is the property suitable for a live-in carer (a spare room, basic facilities)? Are needs stable, or likely to change quickly? And, practically, how does the ongoing cost compare over months rather than weeks?</p>
+<p>Many families start with visiting home care, move to live-in care as needs increase, and only consider residential care if medical needs genuinely require it. There's no shame in changing the plan as circumstances change &mdash; the goal at every stage is simply the best fit for that person, right now.</p>
+  </div>
+  <div class="blog-article-src" id="src-reablement-explained" hidden>
+    <span class="blog-cat">Recovery</span>
+    <h2>Reablement Explained: Regaining Independence After a Hospital Stay</h2>
+    <span class="blog-read">4 min read</span>
+    <p>Coming home after a hospital stay, an illness, or a fall can be daunting &mdash; even simple tasks like making a cup of tea or getting dressed can suddenly feel like a lot. Reablement exists for exactly this stretch of recovery.</p>
+<p>Unlike ongoing homecare, which is typically open-ended, reablement is a short, structured programme &mdash; usually a matter of weeks &mdash; built around one goal: helping you rebuild the confidence and physical ability to manage daily tasks yourself again, rather than doing them for you.</p>
+<p><strong>What it typically involves:</strong> a carer works alongside you, encouraging and supporting rather than simply completing tasks &mdash; helping you practise safe transfers, get back into a washing and dressing routine, manage the stairs, or rebuild a simple daily structure. Progress is reviewed regularly, and support is reduced in step with your progress, not withdrawn suddenly.</p>
+<p><strong>Why it matters:</strong> people who go through a well-run reablement programme are less likely to be readmitted to hospital and often regain more independence than they would with longer-term, more passive support. It's also usually the route hospital discharge teams and social workers will consider first, before recommending ongoing care.</p>
+<p>If you or a family member has recently been discharged and everyday tasks feel harder than they used to, it's worth asking your GP, discharge team, or a home care provider directly whether a short reablement package could help &mdash; it's often available faster than people expect.</p>
+  </div>
+  <div class="blog-article-src" id="src-choosing-a-provider" hidden>
+    <span class="blog-cat">Getting Started</span>
+    <h2>A Family's Checklist for Choosing a Home Care Provider</h2>
+    <span class="blog-read">5 min read</span>
+    <p>Every homecare provider will tell you they offer compassionate, person-centred care. The way to find out if that's actually true is to ask specific, practical questions &mdash; and to notice how confidently they're answered.</p>
+<p><strong>Regulation.</strong> Is the provider registered with the CQC (England) or the equivalent regulator for your nation? What's their current rating, and can they explain any past inspection findings honestly?</p>
+<p><strong>Continuity of carers.</strong> Will your relative see broadly the same small team, or a constantly changing rota? Continuity matters enormously for people with dementia or complex needs in particular.</p>
+<p><strong>Training and vetting.</strong> Ask what training carers receive before their first visit, whether it's ongoing, and how DBS checks and references are handled.</p>
+<p><strong>Flexibility.</strong> Can visit times and the care plan flex as needs change, without a lengthy renegotiation each time?</p>
+<p><strong>Communication.</strong> How will you, as family, know how a visit went &mdash; a call, a log, a family portal? Who do you contact out of hours if something's wrong?</p>
+<p><strong>Costs, in writing.</strong> Ask for a clear breakdown of hourly rates, any minimum visit length, travel charges, and cancellation terms before you sign anything.</p>
+<p>A good provider will answer all of this clearly and without hesitation. If answers feel vague or rehearsed, that's worth paying attention to &mdash; you're not just buying a service, you're choosing who looks after someone you love.</p>
+  </div>
+  <div class="blog-article-src" id="src-dementia-care-at-home" hidden>
+    <span class="blog-cat">Specialist Care</span>
+    <h2>Supporting a Loved One with Dementia at Home: Practical Tips</h2>
+    <span class="blog-read">5 min read</span>
+    <p>Caring for someone with dementia at home is rarely about one big decision &mdash; it's usually a series of small, consistent adjustments that add up to a calmer, safer daily life.</p>
+<p><strong>Keep routines predictable.</strong> Familiar timing for meals, waking and washing reduces confusion and anxiety far more than most people expect. Where possible, keep the same carer visiting at the same times each week.</p>
+<p><strong>Simplify the environment.</strong> Clear hallways, good lighting, and labelled cupboards or doors can make a real difference to confidence and safety, without making the home feel institutional.</p>
+<p><strong>Communicate simply and patiently.</strong> Short sentences, one instruction at a time, and gentle prompts work better than long explanations or correcting every mistake. It's usually kinder to enter their reality in the moment than to insist on factual accuracy.</p>
+<p><strong>Watch for unmet needs behind behaviour.</strong> Agitation, wandering or repeated questions are very often a sign of pain, hunger, tiredness, or overstimulation &mdash; not "difficult behaviour" to be managed away.</p>
+<p><strong>Look after the carer too.</strong> Whether that's you or a professional carer, dementia care is demanding. Respite visits, even a few hours a week, help sustain quality care over the long term rather than leading to burnout.</p>
+<p>Specialist dementia homecare &mdash; carers trained specifically in dementia support, working to a consistent routine &mdash; can make an enormous difference to both the person living with dementia and the family around them. It's worth asking any provider directly about their dementia-specific training, not just general care experience.</p>
+  </div>
+  <div class="blog-article-src" id="src-funding-home-care" hidden>
+    <span class="blog-cat">Funding</span>
+    <h2>NHS and Local Authority Funding for Home Care: What You Need to Know</h2>
+    <span class="blog-read">6 min read</span>
+    <p>Funding is consistently the most confusing part of arranging home care &mdash; not because families are missing something obvious, but because the system genuinely has several overlapping routes. Here's the plain-language version.</p>
+<p><strong>Self-funding.</strong> If your savings and assets are above your local council's threshold, you'll typically pay for care privately. You can still ask the council for a needs assessment (see below) and arrange care through an agency directly, or via a council-brokered service.</p>
+<p><strong>Local authority-funded care.</strong> If your assets are below the threshold, your council may fund some or all of your care after a financial assessment. This starts with a needs assessment &mdash; a social worker reviews what support is required, regardless of who ends up paying for it.</p>
+<p><strong>NHS Continuing Healthcare (CHC).</strong> For people with a primary health need &mdash; usually complex, long-term medical needs &mdash; the NHS can fund the full package of care, including at home. This is a distinct, separate assessment from a council financial assessment, and is worth asking about explicitly if health needs are significant.</p>
+<p><strong>Direct Payments and Personal Budgets.</strong> If you're eligible for council funding, you may be able to receive it as a direct payment and choose and manage your own care &mdash; including engaging a provider like Real Homecare directly &mdash; rather than the council commissioning care on your behalf.</p>
+<p><strong>Where to start.</strong> In almost every case, the first practical step is requesting a needs assessment from your local authority (a legal right in England, regardless of your finances), and asking your GP or hospital discharge team directly whether NHS Continuing Healthcare should be considered. A good home care provider can usually help you understand which of these routes applies to your situation, even before any funding decision is finalised.</p>
+  </div>
+</div>
+
+<!-- Article modal -->
+<div class="blog-modal-backdrop" id="blogModalBackdrop">
+  <div class="blog-modal" role="dialog" aria-modal="true" aria-labelledby="blogModalTitle">
+    <button type="button" class="blog-modal-close" id="blogModalClose" aria-label="Close article">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="blog-modal-content" id="blogModalContent"></div>
+  </div>
+</div>
+
+<!-- ================= FRANCHISE ================= -->
+<section id="franchise" style="background:linear-gradient(180deg, var(--paper), var(--mist-2));">
+  <div class="wrap">
+    <button type="button" class="page-back" data-go-home="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to home</button>
+    <div class="section-head reveal-init">
+      <span class="eyebrow">Growing With Us</span>
+      <h2>Franchise Opportunities</h2>
+      <p>We're opening Real Homecare's proven care model to franchise partners who want to build a care business in their own area, backed by our systems, training and brand.</p>
+    </div>
+
+    <div class="stat-tiles reveal-init">
+      <div class="stat-tile">
+        <span class="stat-num">&pound;11.5bn+</span>
+        <span class="stat-label">Size of the UK homecare sector</span>
+        <span class="stat-src">Source: Homecare Association / market research, 2024</span>
+      </div>
+      <div class="stat-tile">
+        <span class="stat-num">88%</span>
+        <span class="stat-label">Agree people would rather be cared for at home than in a care home</span>
+        <span class="stat-src">Source: Homecare Association / YouGov survey</span>
+      </div>
+      <div class="stat-tile">
+        <span class="stat-num">~960,000</span>
+        <span class="stat-label">People receiving domiciliary care across the UK</span>
+        <span class="stat-src">Source: UK domiciliary care industry data, 2024&ndash;25</span>
+      </div>
+    </div>
+
+    <div class="section-head reveal-init" style="margin-top:48px;">
+      <span class="eyebrow">What Partners Get</span>
+      <h2 style="font-size:26px;">Our Framework of Support</h2>
+      <p>We don't hand you a manual and wish you luck. Every franchise partner works from the same operating framework we use ourselves.</p>
+    </div>
+
+    <div class="pillars-grid reveal-init">
+      <div class="pillar-item"><span class="pillar-no">01</span><h4>Business Planning</h4><p>Help building a realistic launch budget, working-capital plan and local feasibility view.</p></div>
+      <div class="pillar-item"><span class="pillar-no">02</span><h4>Comprehensive Training</h4><p>Induction covering care governance, registered manager requirements, safeguarding and leadership.</p></div>
+      <div class="pillar-item"><span class="pillar-no">03</span><h4>Operational Systems</h4><p>Standard operating procedures, policy templates, incident protocols and rostering methods.</p></div>
+      <div class="pillar-item"><span class="pillar-no">04</span><h4>Recruitment Framework</h4><p>Values-based recruitment toolkits, interview guides and DBS/reference workflows.</p></div>
+      <div class="pillar-item"><span class="pillar-no">05</span><h4>Marketing &amp; Lead Generation</h4><p>Local brand launch support, listings, and digital outreach materials to get your phone ringing.</p></div>
+      <div class="pillar-item"><span class="pillar-no">06</span><h4>Care Technology</h4><p>Guidance on electronic care planning, carer logging and family reporting tools.</p></div>
+      <div class="pillar-item"><span class="pillar-no">07</span><h4>Quality &amp; Regulatory Guidance</h4><p>Support preparing for CQC registration, mock inspections and compliance reviews.</p></div>
+      <div class="pillar-item"><span class="pillar-no">08</span><h4>Ongoing Mentoring</h4><p>Regular operational reviews and business-development support as you grow.</p></div>
+    </div>
+
+    <div class="section-head reveal-init" style="margin-top:48px;">
+      <span class="eyebrow">Territory Overview</span>
+      <h2 style="font-size:26px;">Explore Franchise Territories</h2>
+      <p>A sample of how we'll present territory availability once you're in discovery. <strong>The regions, statuses and descriptions below are illustrative examples</strong> &mdash; not live availability, and not real demographic or investment figures. Actual territory details are shared on a discovery call.</p>
+    </div>
+
+    <div class="territory-explorer reveal-init">
+      <div class="territory-map" id="territoryMap" aria-label="Illustrative UK territory map, not to scale">
+        <span class="territory-map-tag">Illustrative layout &mdash; not to scale</span>
+        <button type="button" class="territory-pin" style="top:14%;left:44%;" data-status="soon" data-name="Scotland (Central Belt)" data-desc="Opening for enquiries in a later phase, once our English territories are established.">
+          <span class="territory-dot"></span>Scotland
+        </button>
+        <button type="button" class="territory-pin" style="top:38%;left:26%;" data-status="reserved" data-name="Greater Manchester" data-desc="Currently under discussion with a prospective partner. Register interest to be notified if it becomes available.">
+          <span class="territory-dot"></span>Gtr Manchester
+        </button>
+        <button type="button" class="territory-pin" style="top:34%;left:62%;" data-status="available" data-name="Yorkshire &amp; Humber" data-desc="Example available territory. Real demographic and investment figures are shared once you're in discovery.">
+          <span class="territory-dot"></span>Yorkshire
+        </button>
+        <button type="button" class="territory-pin" style="top:56%;left:40%;" data-status="available" data-name="West Midlands" data-desc="Example available territory. Real demographic and investment figures are shared once you're in discovery.">
+          <span class="territory-dot"></span>West Midlands
+        </button>
+        <button type="button" class="territory-pin" style="top:70%;left:66%;" data-status="operating" data-name="Greater London (HQ)" data-desc="Our home base &mdash; operated directly by Real Homecare, not available for franchise.">
+          <span class="territory-dot"></span>London (HQ)
+        </button>
+        <button type="button" class="territory-pin" style="top:78%;left:38%;" data-status="soon" data-name="South West" data-desc="Opening for enquiries in a future phase.">
+          <span class="territory-dot"></span>South West
+        </button>
+      </div>
+
+      <div class="territory-detail" id="territoryDetail">
+        <span class="territory-status-badge" id="territoryStatus" data-status="available">Available</span>
+        <h3 id="territoryName">West Midlands</h3>
+        <p id="territoryDesc">Example available territory. Real demographic and investment figures are shared once you're in discovery.</p>
+        <div class="territory-legend">
+          <span><i class="dot operating"></i>Operating (HQ)</span>
+          <span><i class="dot available"></i>Available</span>
+          <span><i class="dot reserved"></i>Reserved</span>
+          <span><i class="dot soon"></i>Coming soon</span>
+        </div>
+        <div class="cta-actions" style="margin-top:16px;">
+          <button type="button" class="btn btn-primary btn-sm" data-open-modal="franchise">Book Discovery Call &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head reveal-init" style="margin-top:48px;">
+      <span class="eyebrow">How It Works</span>
+      <h2 style="font-size:26px;">The Franchise Journey</h2>
+    </div>
+
+    <ol class="franchise-steps reveal-init">
+      <li><strong>Enquiry &amp; prospectus</strong><span>Request our franchise pack outlining the model and how we work together.</span></li>
+      <li><strong>Discovery conversation</strong><span>An informal call to understand your background, goals and preferred area.</span></li>
+      <li><strong>Territory discussion</strong><span>We talk through local demographics and demand for your area of interest.</span></li>
+      <li><strong>Meet the team</strong><span>See how we operate day-to-day and ask us anything.</span></li>
+      <li><strong>Agreement &amp; registration</strong><span>Franchise agreement, registered manager planning and CQC registration steps.</span></li>
+      <li><strong>Launch &amp; ongoing support</strong><span>Training, launch marketing and mentoring as you welcome your first clients.</span></li>
+    </ol>
+
+    <div class="value-grid" style="margin-top:8px;">
+      <div class="value-card reveal-init">
+        <div class="service-ic" style="width:48px;height:48px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1m4 0h1m-6 4h1m4 0h1m-6 4h1m4 0h1"/></svg></div>
+        <h3>A Proven Operating Model</h3>
+        <p>Recruitment, compliance, rostering and care-quality processes built and refined on a real, CQC-regulated care business &mdash; not a theoretical playbook.</p>
+      </div>
+      <div class="value-card reveal-init">
+        <div class="service-ic" style="width:48px;height:48px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg></div>
+        <h3>Training &amp; Launch Support</h3>
+        <p>Onboarding, carer-recruitment support and access to our accredited training partner network to get your local team qualified from day one.</p>
+      </div>
+      <div class="value-card reveal-init">
+        <div class="service-ic" style="width:48px;height:48px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3>Brand &amp; Ongoing Backing</h3>
+        <p>Trade under an established, trusted homecare brand with head-office support rather than starting from zero on your own.</p>
+      </div>
+    </div>
+
+    <div class="page-cta-card reveal-init" style="max-width:640px;margin-inline:auto;text-align:center;">
+      <h3>Interested in a franchise territory?</h3>
+      <p>Territory availability, investment requirements and full franchise terms are discussed directly with our team &mdash; enquire below and we'll send you the details.</p>
+      <div class="cta-actions" style="justify-content:center;">
+        <button type="button" class="btn btn-primary" data-open-modal="franchise">Enquire About Franchising</button>
+        <a href="tel:+442037691947" class="btn btn-ghost">Call 020 3769 1947</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DOWNLOAD CENTRE ================= -->
+<section id="downloads" style="background:var(--paper);">
+  <div class="wrap">
+    <button type="button" class="page-back" data-go-home="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to home</button>
+    <div class="section-head reveal-init">
+      <span class="eyebrow">Information &amp; Guides</span>
+      <h2>Download Centre</h2>
+      <p>Free guides for families weighing up care options, prospective franchise partners, and care professionals. Request one below and we'll email it to you.</p>
+    </div>
+
+    <div class="blog-pills reveal-init" id="resourcePills">
+      <button type="button" class="blog-pill active" data-cat-filter="all">All</button>
+      <button type="button" class="blog-pill" data-cat-filter="care">Care Resources</button>
+      <button type="button" class="blog-pill" data-cat-filter="franchise">Franchise Resources</button>
+      <button type="button" class="blog-pill" data-cat-filter="recruitment">Recruitment Resources</button>
+      <button type="button" class="blog-pill" data-cat-filter="professional">Professional Resources</button>
+    </div>
+
+    <div class="resource-grid reveal-init" id="resourceGrid">
+      <div class="resource-card" data-cat="care">
+        <div class="resource-card-top">
+          <div class="resource-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+          <span class="resource-meta">Care Resources</span>
+        </div>
+        <h3>Understanding Homecare Guide</h3>
+        <p>An introduction to homecare in the UK &mdash; what it covers, how it's arranged and what to expect from a visit.</p>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="download" data-preset-resource="Understanding Homecare Guide">Request This Guide &rarr;</button>
+      </div>
+      <div class="resource-card" data-cat="care">
+        <div class="resource-card-top">
+          <div class="resource-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c-4.4-3.4-8-6.6-8-10.6C4 7 6.5 5 9.2 5c1.6 0 3.1.8 4 2.1C14.1 5.8 15.6 5 17.2 5 19.9 5 22 7 22 10.4c0 4-3.6 7.2-8 10.6z"/></svg></div>
+          <span class="resource-meta">Care Resources</span>
+        </div>
+        <h3>Choosing the Right Care Guide</h3>
+        <p>Questions to ask and things to compare when you're weighing up home care against other options for a loved one.</p>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="download" data-preset-resource="Choosing the Right Care Guide">Request This Guide &rarr;</button>
+      </div>
+      <div class="resource-card" data-cat="care">
+        <div class="resource-card-top">
+          <div class="resource-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 2h6v3H9z"/><path d="M9 11h6M9 15h6"/></svg></div>
+          <span class="resource-meta">Care Resources</span>
+        </div>
+        <h3>Dementia Care at Home Guide</h3>
+        <p>Practical tips for supporting someone living with dementia in familiar, comfortable surroundings.</p>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="download" data-preset-resource="Dementia Care at Home Guide">Request This Guide &rarr;</button>
+      </div>
+      <div class="resource-card" data-cat="care">
+        <div class="resource-card-top">
+          <div class="resource-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l2-2m0 0 7-7 7 7M5 10v10a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1V10"/></svg></div>
+          <span class="resource-meta">Care Resources</span>
+        </div>
+        <h3>Preparing for Care at Home</h3>
+        <p>A short checklist for families getting a home ready for a carer's first visit.</p>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="download" data-preset-resource="Preparing for Care at Home Guide">Request This Guide &rarr;</button>
+      </div>
+      <div class="resource-card" data-cat="franchise">
+        <div class="resource-card-top">
+          <div class="resource-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <span class="resource-meta">Franchise Resources</span>
+        </div>
+        <h3>Real Homecare Franchise Prospectus</h3>
+        <p>Our franchise model, support framework and what's involved in opening a territory.</p>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="download" data-preset-resource="Franchise Prospectus">Request This Guide &rarr;</button>
+      </div>
+      <div class="resource-card" data-cat="recruitment">
+        <div class="resource-card-top">
+          <div class="resource-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <span class="resource-meta">Recruitment Resources</span>
+        </div>
+        <h3>Working at Real Homecare Guide</h3>
+        <p>What it's like to work with us &mdash; roles, training, pay and how our recruitment process runs.</p>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="download" data-preset-resource="Working at Real Homecare Guide">Request This Guide &rarr;</button>
+      </div>
+      <div class="resource-card" data-cat="recruitment">
+        <div class="resource-card-top">
+          <div class="resource-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M14 10h6M14 14h4"/></svg></div>
+          <span class="resource-meta">Recruitment Resources</span>
+        </div>
+        <h3>Care Professional Information Pack</h3>
+        <p>For candidates preparing for interview &mdash; what we look for and how induction works.</p>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="download" data-preset-resource="Care Professional Information Pack">Request This Guide &rarr;</button>
+      </div>
+      <div class="resource-card" data-cat="professional">
+        <div class="resource-card-top">
+          <div class="resource-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-3.9M8.6 13.5l6.8 3.9"/></svg></div>
+          <span class="resource-meta">Professional Resources</span>
+        </div>
+        <h3>Professional Referral Guide</h3>
+        <p>For NHS staff, social workers and discharge teams &mdash; how to refer a patient or client to us.</p>
+        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="download" data-preset-resource="Professional Referral Guide">Request This Guide &rarr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DOWNLOAD CENTRE (modal) ================= -->
+<div class="form-modal-backdrop" id="downloadModalBackdrop">
+  <div class="form-modal" role="dialog" aria-modal="true" aria-labelledby="downloadModalTitle">
+    <button type="button" class="form-modal-close" data-close-modal="download" aria-label="Close request form">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="form-modal-scroll">
+      <span class="eyebrow">Resource Request</span>
+      <h2 id="downloadModalTitle" class="form-modal-title">Request This Guide</h2>
+      <p class="form-modal-sub">Tell us where to send it &mdash; we'll email it across, usually within one business day.</p>
+
+      <form id="downloadForm" action="mailto:info@realhomecare.net?subject=Resource%20Request" method="post" enctype="text/plain">
+        <div class="field">
+          <label for="downloadResource">Guide requested</label>
+          <input type="text" id="downloadResource" name="Guide" readonly>
+        </div>
+        <div class="field">
+          <label for="downloadFirstName">First name</label>
+          <input type="text" id="downloadFirstName" name="First name" placeholder="Your first name" required>
+        </div>
+        <div class="field">
+          <label for="downloadLastName">Last name</label>
+          <input type="text" id="downloadLastName" name="Last name" placeholder="Your last name" required>
+        </div>
+        <div class="field">
+          <label for="downloadEmail">Email address</label>
+          <input type="email" id="downloadEmail" name="Email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="downloadPhone">Telephone (optional)</label>
+          <input type="tel" id="downloadPhone" name="Phone" placeholder="Your contact number">
+        </div>
+        <div class="field">
+          <label for="downloadInterest">Primary area of interest</label>
+          <select id="downloadInterest" name="Interest">
+            <option>Care for myself or a family member</option>
+            <option>Referring a patient or client</option>
+            <option>Exploring a franchise territory</option>
+            <option>Working at Real Homecare</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field-check">
+          <input type="checkbox" id="downloadConsent" required>
+          <label for="downloadConsent">I agree to Real Homecare contacting me with relevant care or franchise information, as set out in the <a href="#legal">Privacy Policy</a>.</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:22px;">Send Me This Guide</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FRANCHISE (modal) ================= -->
+<div class="form-modal-backdrop" id="franchiseModalBackdrop">
+  <div class="form-modal" role="dialog" aria-modal="true" aria-labelledby="franchiseModalTitle">
+    <button type="button" class="form-modal-close" data-close-modal="franchise" aria-label="Close franchise enquiry form">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="form-modal-scroll">
+      <span class="eyebrow">Franchise Enquiry</span>
+      <h2 id="franchiseModalTitle" class="form-modal-title">Enquire About Franchising</h2>
+      <p class="form-modal-sub">Tell us a little about you and we'll follow up with the full prospectus and next steps.</p>
+      <form id="franchiseForm" action="mailto:info@realhomecare.net?subject=Franchise%20Enquiry" method="post" enctype="text/plain">
+        <div class="field">
+          <label for="fzName">Full name</label>
+          <input id="fzName" name="Name" type="text" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label for="fzEmail">Email</label>
+          <input id="fzEmail" name="Email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="fzPhone">Phone</label>
+          <input id="fzPhone" name="Phone" type="tel" placeholder="Your contact number" required>
+        </div>
+        <div class="field">
+          <label for="fzBackground">Current role / background</label>
+          <input id="fzBackground" name="Background" type="text" placeholder="e.g. Operations manager, care sector, first-time business owner" required>
+        </div>
+        <div class="field">
+          <label for="fzArea">Area or region you're interested in</label>
+          <input id="fzArea" name="AreaOfInterest" type="text" placeholder="e.g. West Midlands, or 'not sure yet'" required>
+        </div>
+        <div class="field">
+          <label for="fzReadiness">Investment readiness</label>
+          <select id="fzReadiness" name="Readiness" required>
+            <option value="">Select&hellip;</option>
+            <option>Ready to invest now</option>
+            <option>Exploring, likely within 6 months</option>
+            <option>Just researching for now</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fzNotes">Anything else you'd like us to know?</label>
+          <textarea id="fzNotes" name="Notes" placeholder="Optional"></textarea>
+        </div>
+        <div class="field-check">
+          <input type="checkbox" id="fzConsent" required>
+          <label for="fzConsent">I consent to Real Homecare holding this information to respond to my franchise enquiry, as set out in the <a href="#legal">Privacy Policy</a>.</label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:22px;">Submit Enquiry</button>
+        <p class="form-note">Submitting opens your email app with your answers filled in, addressed to info@realhomecare.net &mdash; check it and hit send.</p>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- ================= FAQS ================= -->
 <section id="faqs">
@@ -1274,6 +2375,26 @@
       <details class="faq-item reveal-init">
         <summary>Can a care plan change once it's in place? <span class="plus"></span></summary>
         <p>Yes. We review care plans regularly so support keeps pace with changing needs.</p>
+      </details>
+      <details class="faq-item reveal-init">
+        <summary>Will I see the same carer each visit? <span class="plus"></span></summary>
+        <p>Wherever possible, yes &mdash; we try to keep the same carer or small, consistent team assigned to you, because familiarity matters for both comfort and quality of care.</p>
+      </details>
+      <details class="faq-item reveal-init">
+        <summary>How much does homecare cost? <span class="plus"></span></summary>
+        <p>Cost depends on the type and hours of support needed. We'll give you a clear, written cost breakdown after your free consultation &mdash; no hidden fees.</p>
+      </details>
+      <details class="faq-item reveal-init">
+        <summary>Can care be funded through the NHS or local authority? <span class="plus"></span></summary>
+        <p>Some care can be funded or part-funded through your local authority or the NHS, depending on assessed need and financial circumstances. We can point you toward how to find out, and we also work directly with local authorities and NHS discharge teams on referred care.</p>
+      </details>
+      <details class="faq-item reveal-init">
+        <summary>Can my family stay involved in the care plan? <span class="plus"></span></summary>
+        <p>Yes, if that's what you and the person receiving care want. We keep families informed and welcome their input into how care is delivered.</p>
+      </details>
+      <details class="faq-item reveal-init">
+        <summary>What happens if I have concerns about the care being provided? <span class="plus"></span></summary>
+        <p>Speak to your care coordinator directly &mdash; that's the fastest route. If it's not resolved, you can escalate to our management team; every concern is logged and reviewed as part of how we maintain our CQC standards.</p>
       </details>
     </div>
   </div>
@@ -1429,22 +2550,58 @@
     <div class="foot-brand">
       <img src="data:image/png;base64,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" alt="Real Homecare logo">
       <p class="foot-tag">Compassionate, CQC-rated &ldquo;Good&rdquo; home care across North London &mdash; helping people live independently, at home, with dignity.</p>
+      <div class="foot-cta">
+        <a href="#contact" class="btn btn-primary btn-sm" data-purpose="care">Talk to Our Care Team</a>
+        <a href="#franchise" class="btn btn-ghost btn-sm">Franchise Enquiry</a>
+      </div>
     </div>
     <div class="foot-col">
-      <h4>Explore</h4>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#why-us">Why Us</a>
-      <a href="#services">Services</a>
+      <h4>Care Services</h4>
+      <a href="#services">Homecare</a>
+      <a href="#services">Live-in Care</a>
+      <a href="#services">Reablement</a>
+      <a href="#services">Respite Care</a>
+      <a href="#services">Complex Care</a>
+      <a href="#services">Personal Assistance</a>
+      <a href="#services">End of Life Care</a>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <a href="#about">About Us</a>
+      <a href="#why-us">Why Choose Us</a>
+      <a href="#careers">Careers &amp; Vacancies</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+    <div class="foot-col">
+      <h4>Professionals</h4>
+      <a href="#referral">Make a Referral</a>
+      <a href="#referral">NHS &amp; Social Care Teams</a>
+      <a href="#blog">Advice &amp; Insights</a>
+    </div>
+    <div class="foot-col">
+      <h4>Franchise</h4>
+      <a href="#franchise">Franchise Opportunities</a>
+      <a href="#franchise">Enquire About Franchising</a>
+    </div>
+    <div class="foot-col">
+      <h4>Resources</h4>
+      <a href="#blog">Advice Centre</a>
+      <a href="#downloads">Download Centre</a>
       <a href="#faqs">FAQs</a>
-      <a href="#news">News</a>
-      <a href="#contact">Contact</a>
     </div>
-    <div class="foot-col">
-      <h4>Contact</h4>
-      <a href="tel:+442037691947">0203 769 1947</a>
-      <a href="mailto:info@realhomecare.net">info@realhomecare.net</a>
-      <p>Unit 213, Tudor Leaf Business Centre,<br>2&ndash;8 Fountayne Road, London N15 4QL</p>
+  </div>
+  <div class="wrap foot-contact">
+    <div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <div><a href="tel:+442037691947">0203 769 1947</a><span>Dedicated line for care enquiries &amp; family support</span></div>
+    </div>
+    <div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+      <div><a href="mailto:info@realhomecare.net">info@realhomecare.net</a><span>Direct enquiries routed to your local care coordinator</span></div>
+    </div>
+    <div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div><span class="foot-addr-title">Real Homecare Headquarters</span><span>Unit 213, Tudor Leaf Business Centre, 2&ndash;8 Fountayne Road, London N15 4QL</span></div>
     </div>
   </div>
   <div class="wrap foot-trust">
@@ -1467,7 +2624,7 @@
   </div>
   <div class="wrap foot-bottom">
     <span>&copy; <span id="year"></span> Real Homecare Limited (Co. No. 11452302). All rights reserved.</span>
-    <span><a href="#legal-privacy">Privacy Policy</a> &middot; <a href="#legal-terms">Terms &amp; Conditions</a> &middot; <a href="#legal-cookies">Cookie Policy</a> &middot; <a href="#legal-accessibility">Accessibility</a></span>
+    <span><a href="#legal-privacy">Privacy Policy</a> &middot; <a href="#legal-terms">Terms &amp; Conditions</a> &middot; <a href="#legal-cookies">Cookie Policy</a> &middot; <a href="#" data-open-cookie-settings="1">Cookie Settings</a> &middot; <a href="#legal-accessibility">Accessibility</a></span>
   </div>
 </footer>
 
@@ -1508,13 +2665,117 @@
   </div>
 </div>
 
-<a href="https://wa.me/447539616931" target="_blank" rel="noopener" class="float-wa" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.6l.4-.5.2-.4c.1-.1.1-.3 0-.4L9 6.9c-.2-.4-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2c0 1.3.9 2.6 1.1 2.8s1.7 2.7 4.3 3.7a13 13 0 0 0 1.5.6c.6.2 1.2.1 1.6 0 .5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2s-.2-.2-.5-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2z"/></svg>
-</a>
+<div class="float-menu" id="floatMenu">
+  <div class="float-options" id="floatOptions" role="menu" aria-hidden="true">
+    <a href="https://wa.me/447539616931" target="_blank" rel="noopener" class="float-opt" role="menuitem">
+      <span class="float-opt-ic wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.6l.4-.5.2-.4c.1-.1.1-.3 0-.4L9 6.9c-.2-.4-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.2c0 1.3.9 2.6 1.1 2.8s1.7 2.7 4.3 3.7a13 13 0 0 0 1.5.6c.6.2 1.2.1 1.6 0 .5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2s-.2-.2-.5-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2z"/></svg></span>
+      <span class="float-opt-label">Chat on WhatsApp</span>
+    </a>
+    <a href="tel:+442037691947" class="float-opt" role="menuitem">
+      <span class="float-opt-ic call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+      <span class="float-opt-label">Call our Care Desk</span>
+    </a>
+    <a href="#contact" class="float-opt" role="menuitem" id="floatAssessBtn">
+      <span class="float-opt-ic assess"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+      <span class="float-opt-label">Request Care Assessment</span>
+    </a>
+  </div>
+  <button type="button" class="float-toggle" id="floatToggle" aria-label="Contact us" aria-expanded="false" aria-controls="floatOptions">
+    <svg class="float-ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-4.7 7.6 8.5 8.5 0 0 1-8.6-.6L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.5h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <svg class="float-ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+</div>
+
+<!-- ================= COOKIE CONSENT ================= -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <div class="cookie-banner-inner">
+    <div class="cookie-head">
+      <div class="cookie-ic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="10" cy="15" r="1" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <div>
+        <h3>Cookies on this site</h3>
+        <p>We use essential cookies to keep the site secure and working properly. With your consent, we'd also like to use analytics cookies (e.g. Google Analytics) to understand how visitors use the site, and marketing cookies to tailor follow-up communications. You can change your choice anytime via &ldquo;Cookie Settings&rdquo; in the footer.</p>
+      </div>
+    </div>
+    <div class="cookie-cats" id="cookieCats">
+      <div class="cookie-cat">
+        <div class="cookie-cat-head">
+          <strong>Essential</strong>
+          <label class="cookie-switch"><input type="checkbox" checked disabled><span class="track"></span></label>
+        </div>
+        <p>Required for the site to function &mdash; security, navigation and form submissions. Always on.</p>
+      </div>
+      <div class="cookie-cat">
+        <div class="cookie-cat-head">
+          <strong>Analytics</strong>
+          <label class="cookie-switch"><input type="checkbox" id="cookieAnalytics" checked><span class="track"></span></label>
+        </div>
+        <p>Helps us understand how visitors use the site, so we can improve it.</p>
+      </div>
+      <div class="cookie-cat">
+        <div class="cookie-cat-head">
+          <strong>Marketing</strong>
+          <label class="cookie-switch"><input type="checkbox" id="cookieMarketing"><span class="track"></span></label>
+        </div>
+        <p>Used to tailor follow-up communications and measure enquiry campaigns.</p>
+      </div>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="cookie-customise-link" id="cookieCustomiseBtn">Customise categories</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="cookieRejectBtn">Reject non-essential</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="cookieSaveBtn" style="display:none;">Save preferences</button>
+      <button type="button" class="btn btn-primary btn-sm" id="cookieAcceptBtn">Accept all</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Blog article modal
+  (function(){
+    var backdrop = document.getElementById('blogModalBackdrop');
+    var content = document.getElementById('blogModalContent');
+    var closeBtn = document.getElementById('blogModalClose');
+    if(!backdrop || !content) return;
+    function openArticle(id){
+      var src = document.getElementById('src-' + id);
+      if(!src) return;
+      content.innerHTML = src.innerHTML;
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      backdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('.blog-readmore').forEach(function(btn){
+      btn.addEventListener('click', function(){ openArticle(btn.getAttribute('data-article')); });
+    });
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+  })();
+
+  // Floating contact menu
+  (function(){
+    var menu = document.getElementById('floatMenu');
+    var toggle = document.getElementById('floatToggle');
+    if(!menu || !toggle) return;
+    function close(){ menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+    function open(){ menu.classList.add('open'); toggle.setAttribute('aria-expanded','true'); }
+    toggle.addEventListener('click', function(){
+      if(menu.classList.contains('open')) close(); else open();
+    });
+    document.addEventListener('click', function(e){
+      if(menu.classList.contains('open') && !menu.contains(e.target)) close();
+    });
+    menu.querySelectorAll('.float-opt').forEach(function(a){
+      a.addEventListener('click', function(){ close(); });
+    });
+  })();
 
   // Theme toggle (light / dark), persisted per-viewer
   var root = document.documentElement;
@@ -1696,19 +2957,115 @@
     });
   }
 
-  // Smooth scroll for in-page anchors
+  // ---------- Page-view router ----------
+  // Careers / Referrals / Franchise behave like their own separate pages:
+  // visiting them hides the normal homepage scroll and shows only that
+  // section. Everything else stays on the one continuously scrolling
+  // homepage, reached the normal anchor way.
+  var PAGE_IDS = ['careers', 'referral', 'franchise', 'downloads'];
+  function revealAll(container){
+    container.querySelectorAll('.reveal-init').forEach(function(el){ el.classList.add('in'); });
+  }
+  function showPage(id){
+    var sections = document.querySelectorAll('body > section');
+    sections.forEach(function(sec){
+      if(PAGE_IDS.indexOf(sec.id) === -1){
+        sec.style.display = id ? 'none' : '';
+      } else {
+        sec.style.display = (sec.id === id) ? '' : 'none';
+      }
+    });
+    document.body.classList.toggle('page-mode', !!id);
+    window.scrollTo(0, 0);
+    if(id){
+      var active = document.getElementById(id);
+      if(active) revealAll(active);
+      try{ history.replaceState(null, '', '#' + id); }catch(err){}
+    } else {
+      try{ history.replaceState(null, '', '#home'); }catch(err){}
+    }
+  }
+  function goToAnchor(rawId){
+    var id = rawId.charAt(0) === '#' ? rawId.slice(1) : rawId;
+    if(!id || id === 'home'){ showPage(null); return; }
+    if(PAGE_IDS.indexOf(id) !== -1){
+      showPage(id);
+      return;
+    }
+    var wasPageMode = document.body.classList.contains('page-mode');
+    if(wasPageMode) showPage(null);
+    var jump = function(){
+      var target = document.getElementById(id);
+      if(target){
+        target.scrollIntoView({behavior: (wasPageMode || window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth', block:'start'});
+      }
+    };
+    if(wasPageMode){ requestAnimationFrame(function(){ requestAnimationFrame(jump); }); }
+    else { jump(); }
+  }
+  // Smooth scroll / page-routing for in-page anchors
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
-      var id = a.getAttribute('href');
-      if(id.length > 1){
-        var target = document.querySelector(id);
-        if(target){
-          e.preventDefault();
-          target.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto':'smooth', block:'start'});
-        }
+      var href = a.getAttribute('href');
+      if(href.length > 1){
+        e.preventDefault();
+        goToAnchor(href);
       }
     });
   });
+  document.querySelectorAll('[data-go-home]').forEach(function(btn){
+    btn.addEventListener('click', function(){ showPage(null); });
+  });
+  // Initial load: open directly on a page view if the URL asks for one
+  (function initRoute(){
+    var hash = (location.hash || '').replace('#', '');
+    if(PAGE_IDS.indexOf(hash) !== -1){ showPage(hash); }
+    else { showPage(null); }
+  })();
+
+  // ---------- Form modals (Apply / Referral / Franchise) ----------
+  var MODAL_NAMES = ['apply', 'referral', 'franchise', 'download'];
+  function openFormModal(name){
+    var el = document.getElementById(name + 'ModalBackdrop');
+    if(!el) return;
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeFormModal(name){
+    var el = document.getElementById(name + 'ModalBackdrop');
+    if(!el) return;
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeAllFormModals(){ MODAL_NAMES.forEach(closeFormModal); document.body.style.overflow = ''; }
+  document.querySelectorAll('[data-open-modal]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var name = btn.getAttribute('data-open-modal');
+      openFormModal(name);
+      var presetRole = btn.getAttribute('data-preset-role');
+      if(name === 'apply' && presetRole){
+        var sel = document.getElementById('applyPosition');
+        if(sel){
+          for(var i = 0; i < sel.options.length; i++){
+            if(sel.options[i].text === presetRole){ sel.selectedIndex = i; break; }
+          }
+        }
+      }
+      var presetResource = btn.getAttribute('data-preset-resource');
+      if(name === 'download' && presetResource){
+        var resInput = document.getElementById('downloadResource');
+        if(resInput) resInput.value = presetResource;
+      }
+    });
+  });
+  MODAL_NAMES.forEach(function(name){
+    var backdrop = document.getElementById(name + 'ModalBackdrop');
+    if(!backdrop) return;
+    var closeBtn = backdrop.querySelector('[data-close-modal]');
+    if(closeBtn){ closeBtn.addEventListener('click', function(){ closeFormModal(name); }); }
+    backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeFormModal(name); });
+  });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAllFormModals(); });
 
   // Purpose-aware CTA buttons -> prefill contact form
   var subjectEl = document.getElementById('subject');
@@ -1745,5 +3102,165 @@
   } else {
     items.forEach(function(el){ el.classList.add('in'); });
   }
+})();
+
+// ---------- Cookie consent ----------
+(function(){
+  var KEY = 'rhc_cookie_consent';
+  var banner = document.getElementById('cookieBanner');
+  if(!banner) return;
+  function read(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      return raw ? JSON.parse(raw) : null;
+    }catch(err){ return null; }
+  }
+  function write(val){
+    try{ localStorage.setItem(KEY, JSON.stringify(val)); }catch(err){}
+  }
+  function applyConsent(consent){
+    // Hook point for real analytics/marketing scripts: gate their init on
+    // consent.analytics / consent.marketing before enabling this in production.
+    window.__rhcCookieConsent = consent;
+  }
+  function openBanner(customising){
+    banner.classList.add('open');
+    if(customising) banner.classList.add('customising');
+  }
+  function closeBanner(){
+    banner.classList.remove('open');
+    banner.classList.remove('customising');
+  }
+  var analyticsBox = document.getElementById('cookieAnalytics');
+  var marketingBox = document.getElementById('cookieMarketing');
+  var saveBtn = document.getElementById('cookieSaveBtn');
+  var existing = read();
+  if(existing){
+    applyConsent(existing);
+    if(analyticsBox) analyticsBox.checked = existing.analytics !== false;
+    if(marketingBox) marketingBox.checked = !!existing.marketing;
+  } else {
+    setTimeout(function(){ openBanner(false); }, 600);
+  }
+  var customiseBtn = document.getElementById('cookieCustomiseBtn');
+  if(customiseBtn) customiseBtn.addEventListener('click', function(){
+    var isOpen = banner.classList.toggle('customising');
+    if(saveBtn) saveBtn.style.display = isOpen ? '' : 'none';
+  });
+  var acceptBtn = document.getElementById('cookieAcceptBtn');
+  if(acceptBtn) acceptBtn.addEventListener('click', function(){
+    var consent = {essential:true, analytics:true, marketing:true, ts:Date.now()};
+    write(consent); applyConsent(consent); closeBanner();
+    if(analyticsBox) analyticsBox.checked = true;
+    if(marketingBox) marketingBox.checked = true;
+  });
+  var rejectBtn = document.getElementById('cookieRejectBtn');
+  if(rejectBtn) rejectBtn.addEventListener('click', function(){
+    var consent = {essential:true, analytics:false, marketing:false, ts:Date.now()};
+    write(consent); applyConsent(consent); closeBanner();
+    if(analyticsBox) analyticsBox.checked = false;
+    if(marketingBox) marketingBox.checked = false;
+  });
+  if(saveBtn) saveBtn.addEventListener('click', function(){
+    var consent = {
+      essential:true,
+      analytics: analyticsBox ? analyticsBox.checked : true,
+      marketing: marketingBox ? marketingBox.checked : false,
+      ts:Date.now()
+    };
+    write(consent); applyConsent(consent); closeBanner();
+  });
+  document.querySelectorAll('[data-open-cookie-settings]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      var current = read() || {analytics:true, marketing:false};
+      if(analyticsBox) analyticsBox.checked = current.analytics !== false;
+      if(marketingBox) marketingBox.checked = !!current.marketing;
+      if(saveBtn) saveBtn.style.display = '';
+      openBanner(true);
+    });
+  });
+})();
+
+// ---------- Blog search + category filter ----------
+(function(){
+  var grid = document.getElementById('blogGrid');
+  if(!grid) return;
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.blog-card'));
+  var searchInput = document.getElementById('blogSearch');
+  var pills = document.querySelectorAll('#blogPills .blog-pill');
+  var emptyMsg = document.getElementById('blogEmpty');
+  var activeCat = 'all';
+
+  function applyFilter(){
+    var q = (searchInput && searchInput.value || '').trim().toLowerCase();
+    var visibleCount = 0;
+    cards.forEach(function(card){
+      var matchesCat = activeCat === 'all' || card.getAttribute('data-cat') === activeCat;
+      var text = card.textContent.toLowerCase();
+      var matchesSearch = !q || text.indexOf(q) !== -1;
+      var show = matchesCat && matchesSearch;
+      card.style.display = show ? '' : 'none';
+      if(show) visibleCount++;
+    });
+    if(emptyMsg) emptyMsg.style.display = visibleCount === 0 ? '' : 'none';
+  }
+
+  if(searchInput){
+    searchInput.addEventListener('input', applyFilter);
+  }
+  pills.forEach(function(pill){
+    pill.addEventListener('click', function(){
+      pills.forEach(function(p){ p.classList.remove('active'); });
+      pill.classList.add('active');
+      activeCat = pill.getAttribute('data-cat-filter');
+      applyFilter();
+    });
+  });
+})();
+
+// ---------- Download Centre category filter ----------
+(function(){
+  var grid = document.getElementById('resourceGrid');
+  if(!grid) return;
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.resource-card'));
+  var pills = document.querySelectorAll('#resourcePills .blog-pill');
+  pills.forEach(function(pill){
+    pill.addEventListener('click', function(){
+      pills.forEach(function(p){ p.classList.remove('active'); });
+      pill.classList.add('active');
+      var cat = pill.getAttribute('data-cat-filter');
+      cards.forEach(function(card){
+        card.style.display = (cat === 'all' || card.getAttribute('data-cat') === cat) ? '' : 'none';
+      });
+    });
+  });
+})();
+
+// ---------- Illustrative territory explorer ----------
+(function(){
+  var pins = document.querySelectorAll('.territory-pin');
+  if(!pins.length) return;
+  var statusLabels = {operating:'Operating (HQ)', available:'Available', reserved:'Reserved', soon:'Coming soon'};
+  var nameEl = document.getElementById('territoryName');
+  var descEl = document.getElementById('territoryDesc');
+  var statusEl = document.getElementById('territoryStatus');
+  function selectPin(pin){
+    pins.forEach(function(p){ p.classList.remove('active'); });
+    pin.classList.add('active');
+    var status = pin.getAttribute('data-status');
+    if(nameEl) nameEl.textContent = pin.getAttribute('data-name');
+    if(descEl) descEl.textContent = pin.getAttribute('data-desc');
+    if(statusEl){
+      statusEl.setAttribute('data-status', status);
+      statusEl.textContent = statusLabels[status] || status;
+    }
+  }
+  pins.forEach(function(pin){
+    pin.addEventListener('click', function(){ selectPin(pin); });
+  });
+  // Pre-select the West Midlands pin (matches the detail panel's default copy)
+  var defaultPin = document.querySelector('.territory-pin[data-name="West Midlands"]');
+  if(defaultPin) selectPin(defaultPin);
 })();
 </script>
